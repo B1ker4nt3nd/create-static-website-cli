@@ -27,25 +27,27 @@ rl.question('What should be the name of application? ', (answer) => {
         return;
       }
       console.log(`Git clone successful`);
-      const packageJson = {
-        name: appName,
-      };
-      fs.writeFile(
-        `${folderName}/package.json`,
-        JSON.stringify(packageJson, null, 2),
-        (err) => {
-          if (err) throw err;
-          console.log('package.json successfully created');
-          exec(`cd ${folderName} && npm install`, (err, stdout, stderr) => {
-            if (err) {
-              console.error(`exec error: ${error}`);
-              return;
-            }
-            console.log(`Npm install successful`);
-            process.exit();
-          });
+
+      // Read the existing package.json file
+      const packageJsonPath = `${folderName}/package.json`;
+      const packageJsonString = fs.readFileSync(packageJsonPath);
+      const packageJson = JSON.parse(packageJsonString);
+
+      // Update the "name" property
+      packageJson.name = appName;
+
+      // Write the updated object back to the file
+      fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+      console.log('package.json successfully updated');
+
+      exec(`cd ${folderName} && npm install`, (err, stdout, stderr) => {
+        if (err) {
+          console.error(`exec error: ${error}`);
+          return;
         }
-      );
+        console.log(`Npm install successful`);
+        process.exit();
+      });
     }
   );
 });

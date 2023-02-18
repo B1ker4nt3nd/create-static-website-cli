@@ -1,6 +1,6 @@
 {
   "name": "create-static-website-cli",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "create webpack shell",
   "main": "cli.js",
   "scripts": {
