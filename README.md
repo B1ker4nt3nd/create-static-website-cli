@@ -3,7 +3,7 @@
 A Command Line Interface (CLI) tool for generating a static website, built using Node.js.
 
 ```console
-$ npx @b1ker4nt3nd/create-static-website-cli
+$ npx create-static-website-cli
 ```
 
 ## Features
