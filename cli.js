@@ -16,8 +16,15 @@ process.on('SIGINT', function () {
 });
 
 rl.question('What should be the name of application? ', (answer) => {
-  const appName = answer.trim();
-  const folderName = appName.replace(/\s/g, '-');
+  const appName = answer.trim().toLowerCase().replace(/\s+/g, '-');
+  if (!/^[a-z0-9-_]+$/.test(appName)) {
+    console.error(
+      `Invalid package name: "${appName}". The name must be lowercase and one word, and may contain hyphens and underscores only.`
+    );
+    process.exit(1);
+  }
+
+  const folderName = appName;
 
   exec(
     `git clone https://github.com/B1ker4nt3nd/webpack-init.git ${folderName}`,
